@@ -527,7 +527,7 @@ function fixTrack($tval) {
     return $tval;
 }
 
-function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype="", $bgcolor="", $label="") {
+function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype="", $bgcolor="", $caption="") {
     $tc = "";
     
     // add a name specific tag to the wrapper class
@@ -586,7 +586,7 @@ function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype=
             $colorval = "";
         }
         $tc.= "<div aid=\"$i\" type=\"$thingtype\" subid=\"$tkey\" title=\"$tkey\"$colorval class=\"" . $thingtype . $subtype . $tkeyshow . " p_$kindex" . $extra . "\" id=\"a-$i-$tkey" . "\">";
-		$tc.= "<div class=\"caption c_$kindex\">" . $label . "</div>";
+		$tc.= "<div class=\"caption c_$kindex\">" . $caption . "</div>";
 		$tc.= "<div class=\"captionStatus cs_$kindex\">" . $tval . "</div>";
 		$tc.= "</div>";
     }
