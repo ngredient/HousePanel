@@ -493,7 +493,7 @@ function makeThing($i, $kindex, $thesensor, $panelname, $postop=0, $posleft=0) {
                 $cval = $thingvalue["color"];
                 if ( preg_match("/^#[abcdefABCDEF\d]{6}/",$cval) ) {
                     $bgcolor = " style=\"background-color:$cval;\"";
-                    $tc.= putElement($kindex, $i, $j, $thingtype, $cval, "color", $subtype);
+                    $tc.= putElement($kindex, $i, $j, $thingtype, $cval, "color", $subtype, "", $thingpr);
                     $j++;
                 }
             }
@@ -502,12 +502,12 @@ function makeThing($i, $kindex, $thesensor, $panelname, $postop=0, $posleft=0) {
                 // also skip the checkInterval since we never display this
                 if ( strpos($tkey, "DeviceWatch-") === FALSE &&
                      strpos($tkey, "checkInterval") === FALSE && $tkey!=="color" ) { 
-                    $tc.= putElement($kindex, $i, $j, $thingtype, $tval, $tkey, $subtype, $bgcolor);
+                    $tc.= putElement($kindex, $i, $j, $thingtype, $tval, $tkey, $subtype, $bgcolor, $thingpr);
                     $j++;
                 }
             }
         } else {
-            $tc.= putElement($kindex, $i, 0, $thingtype, $thingvalue, "value", $subtype);
+            $tc.= putElement($kindex, $i, 0, $thingtype, $thingvalue, "value", $subtype, "", $thingpr);
         }
     }
     $tc.= "</div>";
@@ -527,7 +527,7 @@ function fixTrack($tval) {
     return $tval;
 }
 
-function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype="", $bgcolor="") {
+function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype="", $bgcolor="", $label="") {
     $tc = "";
     
     // add a name specific tag to the wrapper class
@@ -585,7 +585,10 @@ function putElement($kindex, $i, $j, $thingtype, $tval, $tkey="value", $subtype=
         } else {
             $colorval = "";
         }
-        $tc.= "<div aid=\"$i\" type=\"$thingtype\"  subid=\"$tkey\" title=\"$tkey\"$colorval class=\"" . $thingtype . $subtype . $tkeyshow . " p_$kindex" . $extra . "\" id=\"a-$i-$tkey" . "\">" . $tval . "</div>";
+        $tc.= "<div aid=\"$i\" type=\"$thingtype\" subid=\"$tkey\" title=\"$tkey\"$colorval class=\"" . $thingtype . $subtype . $tkeyshow . " p_$kindex" . $extra . "\" id=\"a-$i-$tkey" . "\">";
+		$tc.= "<div class=\"caption c_$kindex\">" . $label . "</div>";
+		$tc.= "<div class=\"captionStatus cs_$kindex\">" . $tval . "</div>";
+		$tc.= "</div>";
     }
     return $tc;
 }

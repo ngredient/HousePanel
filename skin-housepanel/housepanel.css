@@ -229,6 +229,28 @@ div.optionstable {
     color: #000000;
     width: 100%;
 }
+
+div.caption {
+	position: relative;
+	left: 2px;
+	top: 1px;
+	font-size: 10px;
+	height:  0px;
+	text-align: left;
+	color: #ffffee;
+/*	display: none;	*/
+}
+div.captionStatus {
+	position: relative;
+	left: 2px;
+	top: 12px;
+	font-size: 13px;
+	text-transform: capitalize;
+	height:  0px;
+	text-align: left;
+	color: #ffffee;
+/*	display: none;	*/
+}
 table.roomoptions, table.headoptions {
     margin: 0px;    background-color: #ffffff;    color: #000000;
     font-size: 11pt;    width: 100%;
