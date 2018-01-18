@@ -291,14 +291,8 @@ function editTile(str_type, thingname, thingindex, str_on, str_off) {
 	dialog_html += "<div id='wysISwyg' tile='0' bid='0' type='switch' panel='main' class='thing " + str_type + "-thing p_" + thingindex + "'>";
 	dialog_html += "<div id='tileHead' title='" + str_type + "status' class='thingname " + str_type + " t_" + thingindex + "' id='title_" + thingindex + "'>";
 	dialog_html += "<span id='tileText' class='n_" + thingindex + "'>" + thingname + "</span></div>";
-	dialog_html += "<div id='tileImage_on' class='" + str_type + " " + thingname.toLowerCase() + " p_" + thingindex + " " + str_on + "'>";
-	dialog_html += "<div class='caption c_" + thingindex + "'>" + thingname + "</div>";
-	dialog_html += "<div class='captionStatus cs_" + thingindex + "'>" + str_on + "</div>";	
-	dialog_html += "</div>";
-	dialog_html += "<div id='tileImage_off' class='" + str_type + " " + thingname.toLowerCase() + " p_" + thingindex + " " + str_off + "'>";
-	dialog_html += "<div class='caption c_" + thingindex + "'>" + thingname + "</div>";
-	dialog_html += "<div class='caption c_" + thingindex + "'>" + str_off + "</div>";	
-	dialog_html += "</div>";
+	dialog_html += "<div id='tileImage_on' class='" + str_type + " " + thingname.toLowerCase() + " p_" + thingindex + " " + str_on + "'>" + str_on + "</div>";
+	dialog_html += "<div id='tileImage_off' class='" + str_type + " " + thingname.toLowerCase() + " p_" + thingindex + " " + str_off + "'>" + str_off + "</div>";
 	dialog_html += "</div>";
 	//End: wysISwyg
 	
@@ -433,8 +427,7 @@ function pickColor(strCaller) {
 };
 
 function relayColor(cssRuleTarget) {
-	var strColor = $('#editColor').val();
-	//Check if inverted is applied and reverse colors if necessary (only if icon):
+	var strColor = $('#editColor').val(); //yoda only if icon:
 	if ($("input[name='sectionToggle']:checked").val() === 'icon') {
 		strColor = '#' + changeInverted(strColor.substr(1));		
 	}
