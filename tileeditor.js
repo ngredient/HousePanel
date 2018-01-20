@@ -61,10 +61,24 @@ function toggleTile() {
 
 
 function initDialogBinds() {
-	
+	//tileDisplay Buttons
+	$('#tileReset').bind('click', function () {
+		resetTile();
+	});
+	$('#tileCopy').bind('click', function () {
+		copyTile();
+	});
+	$('#tilePaste').bind('click', function () {
+		pasteTile();
+	});
+	$('#tileClose').bind('click', function () {
+	    var dialog = document.getElementById('edit_Tile');
+		dialog.close();
+	});
 	$('#toggle').bind('click', function () {
 		toggleTile();
 	});
+	//End tileDisplay Buttons	
 	
 	$('#wysISwyg').bind('click', function () {
 		toggleTile();
@@ -101,24 +115,18 @@ function initDialogBinds() {
 		var cssRuleTarget = getCssRuleTarget('head');
 		if($("#noHead").is(':checked')){
 			addCSSRule(cssRuleTarget, "display: none;", 1);
-
 			cssRuleTarget = "div.ovCaption.vc_" + getTileNumber();
 			addCSSRule(cssRuleTarget, "visibility: visible;", 1);
-						console.log(cssRuleTarget);
 			cssRuleTarget = "div.ovStatus.vs_" + getTileNumber();
 			addCSSRule(cssRuleTarget, "visibility: visible;", 1);
-						console.log(cssRuleTarget);
 		} else {
 			addCSSRule(cssRuleTarget, "display: inline-block;", 0);
 			var rule = "width: " + ($("#wysISwyg").width() - 2) + "px;";
 			addCSSRule(getCssRuleTarget('head'), rule);
-
 			cssRuleTarget = "div.ovCaption.vc_" + getTileNumber();
 			addCSSRule(cssRuleTarget, "", 1);
-						console.log(cssRuleTarget);
 			cssRuleTarget = "div.ovStatus.vs_" + getTileNumber();
 			addCSSRule(cssRuleTarget, "", 1);
-						console.log(cssRuleTarget);		
 		}
 	});	
 	
@@ -290,10 +298,10 @@ function editTile(str_type, thingname, thingindex, str_on, str_off) {
 	//tileDisplay_buttons
 	dialog_html += "<div class='tile_buttons'>";
 	dialog_html += "<div>";
-	dialog_html += "<span class='btn' onclick='resetCSSRules(\"" + str_type + "\", " + thingindex + ")'>Reset</span>";
-	dialog_html += "<span class='btn' onclick='tileCopy(" + thingindex + ")'>&#x2398</span>";
-	dialog_html += "<span class='btn' onclick='tilePaste(" + thingindex + ")'>&#x1f4cb</span>";
-	dialog_html += "<span id='dgclose' class='btn' onclick='tileDialogClose()'>Close</span>";
+	dialog_html += "<span class='btn' id='tileReset'>Reset</span>";
+	dialog_html += "<span class='btn' id='tileCopy'>&#x2398</span>";
+	dialog_html += "<span class='btn' id='tilePaste'>&#x1f4cb</span>";
+	dialog_html += "<span class='btn' id='tileClose'>Close</span>";
 	dialog_html += "</div>";
 	dialog_html += "<div>";
 	dialog_html += "<span id='toggle' class='btn'>Toggle</span>";
@@ -334,12 +342,17 @@ function editTile(str_type, thingname, thingindex, str_on, str_off) {
 
 }; //End EditTile
 
-function tileCopy(thingindex) {
-	alert("Not Yet Implemented - Copied: " + thingindex)
+function tileCopy() {
+	copyCSSRule("span.n_" + thingIndex);
+	copyCSSRule("div.t_" + thingIndex);
+	copyCSSRule("div.thingname.t_" + thingIndex);
+	copyCSSRule("div.thing.p_" + thingIndex);
+	copyCSSRule("div." + str_type + ".p_" + thingIndex + ".on");
+	copyCSSRule("div." + str_type + ".p_" + thingIndex + ".off");
 };
 
-function tilePaste(thingindex) {
-	alert("Not Yet Implemented - Pasted To: " + thingindex)
+function tilePaste() {
+	alert("Not Yet Implemented")
 };
 
 function invertHex(hexnum){
@@ -629,11 +642,6 @@ function iconSelected(cssRuleTarget, imagePath) {
 	}
 };
 
-function tileDialogClose() {  
-    var dialog = document.getElementById('edit_Tile');
-	dialog.close();
-};
-
 function addCSSRule(selector, rules, resetFlag){
     //Searching of the selector matching cssRules
 	var sheet = document.getElementById('customtiles').sheet; // returns an Array-like StyleSheetList
@@ -667,13 +675,66 @@ function addCSSRule(selector, rules, resetFlag){
     }
 };
 
-function resetCSSRules(str_type, thingIndex){
-	removeCSSRule("span.n_" + thingIndex);
-	removeCSSRule("div.t_" + thingIndex);
-	removeCSSRule("div.thingname.t_" + thingIndex);
-	removeCSSRule("div.thing.p_" + thingIndex);
-	removeCSSRule("div." + str_type + ".p_" + thingIndex + ".on");
-	removeCSSRule("div." + str_type + ".p_" + thingIndex + ".off");
+var copySource;
+function copyTile(){
+    copySource = {
+        Tile: getCSSRules(getCssRuleTarget("tile")),
+        Head: getCSSRules(getCssRuleTarget("head")),
+        Text: getCSSRules(getCssRuleTarget("text")),
+        IconOn: getCSSRules(getCssRuleTarget("iconOn")),
+        IconOff: getCSSRules(getCssRuleTarget("iconOff"))
+    }
+};
+
+function pasteTile(){
+	
+	if (copySource) {
+		resetTile();		
+		$(document).ready(function(){
+			var selector = getCssRuleTarget("tile");
+			var rules = copySource.Tile;
+			addCSSRule(selector, rules);
+		
+			selector = getCssRuleTarget("head");
+			rules = copySource.Head;
+			addCSSRule(selector, rules);
+		
+			selector = getCssRuleTarget("text");
+			rules = copySource.Text;
+			addCSSRule(selector, rules);
+			
+			selector = getCssRuleTarget("iconOn");
+			rules = copySource.IconOn;
+			addCSSRule(selector, rules);
+			
+			selector = getCssRuleTarget("iconOff");
+			rules = copySource.IconOff;
+			addCSSRule(selector, rules);
+		});
+	} else {
+		alert('Nothing to Paste');
+	}
+};
+
+function getCSSRules(selector){
+	var sheet = document.getElementById('customtiles').sheet; // returns an Array-like StyleSheetList
+	var rules = '';
+    for(var i=sheet.cssRules.length; i--;){
+      var current_style = sheet.cssRules[i];
+      if(current_style.selectorText === selector){
+        	rules=current_style.style.cssText + rules;		
+	  }
+    }
+	return rules;
+};
+
+function resetTile(){
+	removeCSSRule(getCssRuleTarget("text"));
+	//What was this for? removeCSSRule("div.t_" + thingIndex);
+	removeCSSRule(getCssRuleTarget("head"));
+	removeCSSRule(getCssRuleTarget("tile"));
+	removeCSSRule(getCssRuleTarget("iconOn"));
+	removeCSSRule(getCssRuleTarget("iconOff"));
 	$("#Icon").prop("checked", true);
 	$("#noHead").prop("checked", false);
 	section_Toggle('icon');

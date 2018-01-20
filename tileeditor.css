@@ -325,7 +325,7 @@ input[name='sectionToggle']:checked+label{
   text-decoration: none;
 }
 
-#dgclose:hover {
+#tileClose:hover {
   background: #f00000;
   background-image: -webkit-linear-gradient(top, #f00000, #903000);
   background-image: -moz-linear-gradient(top, #f00000, #903000);
