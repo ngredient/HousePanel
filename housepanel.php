@@ -511,7 +511,7 @@ function makeThing($i, $kindex, $thesensor, $panelname, $postop=0, $posleft=0) {
                 }
             }
 			
-				//Add overlay wrapper
+				//Add overlay to display
 				$tc.= "<div class=\"overlay v_$kindex\">";
 				$tc.= "<div class=\"ovCaption vc_$kindex\">" . substr($thingvalue["name"],0,20) . "</div>";
 				if($thingvalue["battery"]) {
@@ -1889,6 +1889,10 @@ function is_ssl() {
 //        $tc.= getOptionsPage($options, $returnURL, $allthings, $sitename);
 //        $tc.= "</div>";
         // end of the tabs
+		
+		// Operation Mode toggle between user and dev mode
+        $tc.= "<div id='opMode' class='toggleOpMode'><div class='slide'><span class='fa fa-circle-o'></span></div></div>";
+		
         $tc.= "</div>";
         
         // create button to show the Options page instead of as a Tab
