@@ -53,13 +53,16 @@ window.addEventListener("load", function(event) {
         }
     });
 	
-	$('#opMode').on('click', function() {
+	$("#opMode").on('click', function() {
       if ($(this).hasClass('on')) {
          $(this).removeClass('on');
+		 $(".dragHandle").hide();
 		 $("div.thing").draggable({ disabled: true });
       } else {
          $(this).addClass('on');
 		 $("div.thing").draggable({ disabled: false });
+		 $(".dragHandle").show();
+		 $("div.thing").show();
       }
     });
 
@@ -67,6 +70,7 @@ window.addEventListener("load", function(event) {
     // the change function does a post to make it permanent
     $("div.thing").draggable({
 		disabled: true,
+		handle: ".dragHandle",
         revert: false,
         containment: "parent",
         delay: 50,
@@ -252,15 +256,9 @@ function setupHideTabs() {
             var hidestatus = $(".restoretabs").html();
             if (hidestatus=="Hide Tabs") {
                 $("#roomtabs").addClass("hidden");
-				if ($('#opMode').hasClass('on')) {
-					$('#opMode').removeClass('on');
-					$("div.thing").draggable({ disabled: true });
-				}
-				$("#opMode").addClass("hidden");
                 $(".restoretabs").html("Show Tabs");
             } else if (hidestatus=="Show Tabs") {
                 $("#roomtabs").removeClass("hidden");
-                $("#opMode").removeClass("hidden");				
                 $(".restoretabs").html("Hide Tabs");
             }
         }

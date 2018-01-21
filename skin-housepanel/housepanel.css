@@ -426,7 +426,7 @@ div.thingname.lock, div.thingname.piston, div.thingname.temperature {
     padding-bottom: 2px;
     border-bottom: 5px solid rgba(0,0,0,0.3);
     height: 30px;
-    cursor: move;
+
 }
 div.thingname:hover {
     background-color: #5050a0; 
@@ -959,7 +959,6 @@ div.thing.blank-thing {
     box-shadow: none;
     width: auto;
     height: auto;
-    cursor: move;
 }
 div.blank:hover {
     background-color: rgba(255,255,255,0.01);
@@ -988,7 +987,7 @@ div.thing.blank-thing:hover {
 div.thing.clock-thing {
     height: 160px;
     width: 246px;
-    cursor: move;
+
 }
 div.clock.weekday {
     margin-top: 10px;
@@ -1006,7 +1005,7 @@ div.clock.tzone{
 div.thing.mode-thing {
     width: auto;
     height: 160px;
-    cursor: move;
+
 }
 div.mode, div.mode1x1, div.mode1x2 {
     width: 120px;
@@ -1040,7 +1039,7 @@ div.thing.image-thing {
     box-shadow: none;
     width: auto;
     height: auto;
-    cursor: move;
+
 }
 div.image.url {
     width: 246px;
@@ -1144,7 +1143,7 @@ div.panel-all div.thingname {
     padding-bottom: 1px;
     border-bottom: 1px solid rgba(0,0,0,0.3);
     height: 20px;
-    cursor: move;
+
 }
 div.panel-all div.open, div.panel-all div.closed, 
 div.panel-all div.inactive, div.panel-all div.active, 
@@ -1342,6 +1341,19 @@ div.ovbLevel.L0{
     background: #F00;
 	width: 2%;
 }
+.dragHandle{
+   	display: none;
+    position: absolute;
+	top: 1px;
+    left: 20%;
+    cursor: move;
+    z-index: 20;
+    background-image: linear-gradient(to bottom, #F9F9F9 0px, #000 2px, #F9F9F9 4px, #000 6px, #F9F9F9 8px, #000 10px, #F9F9F9 12px, #000 14px);
+    width: 60%;
+    height: 14px;
+    margin: 0 auto;
+    opacity: 0.5;
+}
 
 
 .toggleOpMode {
@@ -1352,10 +1364,9 @@ div.ovbLevel.L0{
   width: 62px;
   height: 32px;
   overflow: hidden;
-  position: absolute;
-  top: 3px;
-  right: 3px;
+  display: inline-block;
   transition: all .25s linear;
+  margin: 4px;
 }
 .toggleOpMode .slide {
   color: #818283;
@@ -1368,7 +1379,7 @@ div.ovbLevel.L0{
   text-decoration: none;
   height: 28px;
   width: 28px;
-  position: absolute;
+  position: relative;
   top: 2px;
   left: 2px;
   box-shadow: 0 1px 2px 0 rgba(0,0,0,0.15), 0 1px 1px 0 rgba(255,255,255,.8) inset;

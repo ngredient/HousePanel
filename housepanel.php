@@ -381,13 +381,15 @@ function makeThing($i, $kindex, $thesensor, $panelname, $postop=0, $posleft=0) {
     // wrap thing in generic thing class and specific type for css handling
     // IMPORTANT - changed tile to the saved index in the master list
     //             so one must now use the id to get the value of "i" to find elements
-    $tc=  "<div id=\"t-$i\" tile=\"$kindex\" bid=\"$bid\" type=\"$thingtype\" ";
+    $tc=  "<div id=\"t-$i\" tile=\"$kindex\" bid=\"$bid\" type=\"$thingtype\" "; 
     $tc.= "panel=\"$panelname\" class=\"thing $thingtype" . "-thing p_$kindex\" "; 
     if ($postop!=0 && $posleft!=0) {
         $tc.= "style=\"position: relative; left: $posleft" . "px" . "; top: $postop" . "px" . ";\"";
     }
     $tc.= ">";
-
+	
+    $tc.="<p class=\"dragHandle\"></p>";
+    
     // add a hidden field for passing thing type to js
     // $tc.= hidden("type-$i", $thingtype, "type-$i");
     // $tc.= hidden("id-$i", $bid, "id-$i");
@@ -526,6 +528,7 @@ function makeThing($i, $kindex, $thesensor, $panelname, $postop=0, $posleft=0) {
             $tc.= putElement($kindex, $i, 0, $thingtype, $thingvalue, "value", $subtype);
         }
     }
+
     $tc.= "</div>";
     return $tc;
 }
@@ -1890,9 +1893,6 @@ function is_ssl() {
 //        $tc.= "</div>";
         // end of the tabs
 		
-		// Operation Mode toggle between user and dev mode
-        $tc.= "<div id='opMode' class='toggleOpMode'><div class='slide'><span class='fa fa-circle-o'></span></div></div>";
-		
         $tc.= "</div>";
         
         // create button to show the Options page instead of as a Tab
@@ -1912,6 +1912,9 @@ function is_ssl() {
             $tc.= "<input class=\"submitbutton\" value=\"Refresh\" name=\"submitrefresh\" type=\"submit\" />";
             $tc.= "</form>";
             $tc.='<div id="restoretabs" class="restoretabs">Hide Tabs</div>';
+			// Operation Mode toggle between user and dev mode
+        	$tc.= "<div id='opMode' class='toggleOpMode'><div class='slide'><span class='fa fa-circle-o'></span></div></div>";
+		
         }
         $tc.='</div>';
    
